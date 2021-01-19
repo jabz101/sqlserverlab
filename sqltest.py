@@ -1,13 +1,13 @@
 import pandas as pd
 import pyodbc
-conn = pyodbc.connect('Driver={SQL Server};'
+conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
                       'Server=TESTSQLCLUSTER;'
                       'Database=AdventureWorks2016;'
                       'Trusted_Connection=yes;')
 cursor = conn.cursor()
 
-
-#cursor.execute('SELECT * FROM AdventureWorks2016.HumanResources.Department where DepartmentID = 17')
+##ODBC driver name default SQL Server
+#cursor.execute('''SELECT * FROM AdventureWorks2016.HumanResources.Department where [Name] in ('Engineering')''')
 #for row in cursor:
 #    print(row)
 
@@ -23,7 +23,11 @@ cursor = conn.cursor()
 #                 ''')
 #conn.commit()
 
-sql_query = pd.read_sql_query('SELECT * FROM AdventureWorks2016.HumanResources.Department' , conn)
+sql_query = pd.read_sql_query('''SELECT * FROM AdventureWorks2016.HumanResources.Department Where Name = ('Engineering')''' , conn)
+print(sql_query)
+print(type(sql_query))
+
+sql_query = pd.read_sql_query('SELECT * FROM AdventureWorks2016.HumanResources.Department ' , conn)
 print(sql_query)
 print(type(sql_query))
 
